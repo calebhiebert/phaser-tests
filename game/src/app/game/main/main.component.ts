@@ -21,8 +21,8 @@ export class MainComponent implements AfterViewInit {
     this.game = new Phaser.Game({
       type: Phaser.AUTO,
       canvas: this.canvas.nativeElement,
-      width: 800,
-      height: 600,
+      width: window.innerWidth,
+      height: window.innerHeight,
       scene: [BootScene, PreloaderScene, TitleScene],
     });
 
@@ -37,7 +37,7 @@ export class MainComponent implements AfterViewInit {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
-    const gameRatio = 800 / 600;
+    const gameRatio = windowWidth / windowHeight;
 
     if (windowRatio < gameRatio) {
       this.canvas.nativeElement.style.width = windowWidth + 'px';
