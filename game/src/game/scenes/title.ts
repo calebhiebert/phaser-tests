@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import * as Colyseus from 'colyseus.js';
 
 export class TitleScene extends Phaser.Scene {
   private speed = 300;
@@ -14,11 +15,15 @@ export class TitleScene extends Phaser.Scene {
   private leftKey: Phaser.Input.Keyboard.Key;
   private rightKey: Phaser.Input.Keyboard.Key;
 
+  private client: Colyseus.Client;
+
   constructor(test) {
     super({ key: 'TitleScene' });
   }
 
   private create() {
+    this.client = new Colyseus.Client('ws://localhost:2657');
+
     this.map = this.make.tilemap({ key: 'map' });
     this.tileset = this.map.addTilesetImage('tmap', 'tiles');
 
