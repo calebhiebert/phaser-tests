@@ -23,6 +23,25 @@ export class TitleScene extends Phaser.Scene {
 
   private create() {
     this.client = new Colyseus.Client('ws://localhost:2657');
+    const room = this.client.join('room');
+
+    room.onJoin.addOnce(() => {
+      console.log('JOINED ROOM');
+    });
+
+    console.log('ROOM STATE', room.state);
+
+    room.listen('hello', (change) => {
+      console.log(change);
+    });
+
+    room.listen('timer', (change) => {
+      console.log(change);
+    });
+
+    this.client.onOpen.add(() => {
+      console.log('CONNECTION ESTABLISHED');
+    });
 
     this.map = this.make.tilemap({ key: 'map' });
     this.tileset = this.map.addTilesetImage('tmap', 'tiles');
