@@ -16,8 +16,8 @@ export class GameRoom extends Room<IState> {
 	onInit(options: any) {
 		this.setState({
 			players: {},
+			entities: {},
 			events: [],
-			entities: [],
 		});
 
 		this.game = new Game(this.state);
@@ -39,14 +39,19 @@ export class GameRoom extends Room<IState> {
 			text: `${options.name} has joined the game`,
 		});
 
-		this.state.entities.push({
+		const id = nanoid(4);
+		this.state.entities[id] = {
 			type: 'ship',
 			controller: client.id,
 			x: 0,
 			y: 0,
-			deg: 0,
-			id: nanoid(4),
-		});
+			rot: 0,
+			id: id,
+		};
+
+		if (this.game) {
+			this.game.addShip(this.state.entities[id]);
+		}
 
 		this.sendState(client);
 	}

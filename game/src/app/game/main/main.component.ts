@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import * as Phaser from 'phaser';
 import { BootScene } from 'src/game/scenes/boot';
 import { PreloaderScene } from 'src/game/scenes/preload';
@@ -12,17 +18,23 @@ import { TitleScene } from 'src/game/scenes/title';
 export class MainComponent implements AfterViewInit {
   private game: Phaser.Game;
 
+  private gameWidth = 1600;
+  private gameHeight = 1000;
+
   @ViewChild('game')
   public canvas: ElementRef;
 
-  constructor() {}
+  constructor() {
+    this.gameWidth = window.innerWidth;
+    this.gameHeight = window.innerHeight;
+  }
 
   ngAfterViewInit(): void {
     this.game = new Phaser.Game({
       type: Phaser.AUTO,
       canvas: this.canvas.nativeElement,
-      width: 800,
-      height: 600,
+      width: this.gameWidth,
+      height: this.gameHeight,
       scene: [BootScene, PreloaderScene, TitleScene],
     });
 
@@ -37,7 +49,7 @@ export class MainComponent implements AfterViewInit {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
-    const gameRatio = 800 / 600;
+    const gameRatio = this.gameWidth / this.gameHeight;
 
     if (windowRatio < gameRatio) {
       this.canvas.nativeElement.style.width = windowWidth + 'px';

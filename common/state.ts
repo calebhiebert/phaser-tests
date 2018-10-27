@@ -1,7 +1,7 @@
 export interface IState {
 	players: { [id: string]: IPlayer };
+	entities: { [id: string]: IEntity };
 	events: IEvent[];
-	entities: IEntity[];
 }
 
 export interface IEvent {
@@ -27,5 +27,5 @@ export interface IEntity {
 	id: string;
 	x: number;
 	y: number;
-	deg: number;
+	rot: number;
 }
