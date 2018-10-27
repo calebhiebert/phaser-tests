@@ -1,21 +1,23 @@
 import { Server } from 'colyseus';
 import http from 'http';
 import createLogger from './src/create-logger';
-import { TestRoom } from './src/test-room';
+import { GameRoom } from './src/game-room';
 
+const port = process.env.PORT || 2657;
+const hostname = process.env.HOSTNAME || '0.0.0.0';
 const logger = createLogger('index');
 
 const gameServer = new Server({
-  server: http.createServer(),
+	server: http.createServer(),
 });
 
 logger.info('Created game server');
 
-gameServer.listen(2657, '0.0.0.0', 1, () => {
-  logger.info('SERVER LISTENING', {
-    port: 2657,
-    hostname: '0.0.0.0',
-  });
+gameServer.listen(port as number, hostname, 1, () => {
+	logger.info('SERVER LISTENING', {
+		port,
+		hostname,
+	});
 });
 
-gameServer.register('room', TestRoom);
+gameServer.register('game', GameRoom);
